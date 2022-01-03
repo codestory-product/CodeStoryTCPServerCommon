@@ -6,7 +6,7 @@ public class IntConverter extends MessageConverter<ByteBuf, Integer> {
 
     public IntConverter() {
         super.setEncoder(byteBuf -> byteBuf.readIntLE());
-        super.setDecoder((var byteBuf, var value) -> byteBuf.writeIntLE(value));
+        super.setDecoder((byteBuf, value) -> byteBuf.writeIntLE(value));
     }
 
 }

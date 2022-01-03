@@ -16,7 +16,7 @@ public class StringConverter extends MessageConverter<ByteBuf, String> {
 
             return StringConverter.bytesToStringSetCharsets(byteArray, "UTF-8");
         });
-        super.setDecoder((var byteBuf, var value) -> {
+        super.setDecoder((byteBuf, value) -> {
             byteBuf.order(ByteOrder.LITTLE_ENDIAN);
             byteBuf.writeBytes(value.getBytes(StandardCharsets.UTF_8));
         });
