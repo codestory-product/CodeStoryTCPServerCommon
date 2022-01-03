@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'com.codestory.chat'
+group 'com.github.codestory'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -18,4 +18,12 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
 }
