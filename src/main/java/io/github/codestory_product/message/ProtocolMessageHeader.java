@@ -1,4 +1,4 @@
-package com.codestory.tcp.common.message;
+package io.github.codestory_product.message;
 
 public class ProtocolMessageHeader {
 

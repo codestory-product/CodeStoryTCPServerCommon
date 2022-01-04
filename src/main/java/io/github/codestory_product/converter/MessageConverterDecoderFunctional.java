@@ -1,4 +1,4 @@
-package com.codestory.tcp.common.converter;
+package io.github.codestory_product.converter;
 
 @FunctionalInterface
 public interface MessageConverterDecoderFunctional<P, U> {

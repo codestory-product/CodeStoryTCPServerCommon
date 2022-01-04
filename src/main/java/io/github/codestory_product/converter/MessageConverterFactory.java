@@ -1,6 +1,6 @@
-package com.codestory.tcp.common.converter;
+package io.github.codestory_product.converter;
 
-import com.codestory.tcp.common.message.PayloadDataType;
+import io.github.codestory_product.message.PayloadDataType;
 import io.netty.buffer.ByteBuf;
 
 import java.util.HashMap;

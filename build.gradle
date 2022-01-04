@@ -5,11 +5,18 @@ plugins {
 }
 
 group 'io.github.codestory-product'
-version '1.0'
+version '1.97-SNAPSHOT'
 archivesBaseName = "codestory-tcpcommon"
+def config = rootProject.file(".gradle/gradle.properties")
+def configProperties = new Properties()
+configProperties.load(new FileInputStream(config))
 
 repositories {
     mavenCentral()
+
+    maven {
+        url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+    }
 }
 
 dependencies {
@@ -38,33 +45,63 @@ task codestoryJavadoc(type: Jar) {
     from javadoc
 }
 
-task sourcesJar(type: Jar) {
+task uploadNativeSources(type: Jar) {
+    archiveClassifier = 'sources'
     from sourceSets.main.allSource
 }
 
+//task sourcesJar(type: Jar) {
+//    classifier(null)
+//    from sourceSets.main.allSource
+//
+//    from {
+//        configurations.runtimeClasspath.collect {
+//            it.isDirectory() ? it : zipTree(it)
+//        }
+//    }
+//
+//    manifest {
+//        attributes(
+//                "Implementation-Title": project.name,
+//                "Implementation-Version": project.version,
+//                "Export-Package": "io.codestory.tcp.common;io.github.codestory_product.converter;io.github.codestory_product.message;",
+//                "Class-Path": configurations.runtimeClasspath.collect { it.getName() }.join(' '))
+//    }
+//}
+//./gradlew assemble -x signArchives
+
 artifacts {
-    archives codestoryJavadoc, sourcesJar
+    archives codestoryJavadoc, uploadNativeSources
 }
 
-signing {
-    sign configurations.archives
-}
+
+//signing {
+//    signatory.keyId='045E0930'
+//    signatory.password='codestory1011!'
+//    signatory.secretKeyRingFile='./secring.gpg'
+//
+//    useGpgCmd()
+//    sign configurations.archives
+//
+//    if(project.hasProperty("signing.keyId") && project.hasProperty("signing.password") && project.hasProperty("signing.secretKeyRingFile")) {
+//        sign configurations.archives
+//    }
+//    else {
+//        project.logger.debug("apk")
+//    }
+//}
 
 publishing {
-    repositories {
-        maven {
-            url = 'https://s01.oss.sonatype.org/content/repositories/releases/'
-        }
-    }
 
     publications {
 
         maven (MavenPublication) {
             groupId = 'io.github.codestory-product'
             artifactId = 'codestory-tcpcommon'
-            version = '1.0'
+            version = '1.97-SNAPSHOT'
 
-            artifact 'build/libs/codestory-tcpcommon-1.0.jar'
+            artifact uploadNativeSources
+            artifact 'build/libs/codestory-tcpcommon-1.97-SNAPSHOT.jar'
 
             pom {
                 name = 'codestory-tcpcommon'
@@ -95,6 +132,17 @@ publishing {
                     developerConnection = 'scm:git:ssh://github.com/codestory-product/CodeStoryTCPServerCommon.git'
                     url = 'https://github.com/codestory-product/CodeStoryTCPServerCommon.git'
                 }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name 'nexus'
+            url 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+            credentials {
+                username configProperties['ossrhUsername']
+                password configProperties['ossrhPassword']
             }
         }
     }

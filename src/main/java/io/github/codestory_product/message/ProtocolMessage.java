@@ -1,6 +1,6 @@
-package com.codestory.tcp.common.message;
+package io.github.codestory_product.message;
 
-import com.codestory.tcp.common.converter.MessageConverterFactory;
+import io.github.codestory_product.converter.MessageConverterFactory;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.PooledByteBufAllocator;
 
