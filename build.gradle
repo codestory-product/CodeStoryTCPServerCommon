@@ -50,46 +50,9 @@ task uploadNativeSources(type: Jar) {
     from sourceSets.main.allSource
 }
 
-//task sourcesJar(type: Jar) {
-//    classifier(null)
-//    from sourceSets.main.allSource
-//
-//    from {
-//        configurations.runtimeClasspath.collect {
-//            it.isDirectory() ? it : zipTree(it)
-//        }
-//    }
-//
-//    manifest {
-//        attributes(
-//                "Implementation-Title": project.name,
-//                "Implementation-Version": project.version,
-//                "Export-Package": "io.codestory.tcp.common;io.github.codestory_product.converter;io.github.codestory_product.message;",
-//                "Class-Path": configurations.runtimeClasspath.collect { it.getName() }.join(' '))
-//    }
-//}
-//./gradlew assemble -x signArchives
-
 artifacts {
     archives codestoryJavadoc, uploadNativeSources
 }
-
-
-//signing {
-//    signatory.keyId='045E0930'
-//    signatory.password='codestory1011!'
-//    signatory.secretKeyRingFile='./secring.gpg'
-//
-//    useGpgCmd()
-//    sign configurations.archives
-//
-//    if(project.hasProperty("signing.keyId") && project.hasProperty("signing.password") && project.hasProperty("signing.secretKeyRingFile")) {
-//        sign configurations.archives
-//    }
-//    else {
-//        project.logger.debug("apk")
-//    }
-//}
 
 publishing {
 
